@@ -52,7 +52,7 @@ router.post('/login', (req, res, next) => {
     .catch(next);
 });
 
-
+/*
 router.post('/signup', (req, res, next) => {
   const {
     username,
@@ -90,6 +90,7 @@ router.post('/signup', (req, res, next) => {
     })
     .catch(next);
 });
+*/
 
 router.post('/logout', (req, res) => {
   req.session.currentUser = null;
