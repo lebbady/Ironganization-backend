@@ -12,11 +12,11 @@ const cohortSchema = new Schema ({
   },
   startingDate: {
     type: Date,
-    required: true,
+    // required: true,
   },
   endingDate: {
     type: Date,
-    required: true
+    // required: true
   },
   language: {
     type: String,

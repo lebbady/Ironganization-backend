@@ -39,7 +39,7 @@ const cohorts = [
   }
 ]
 
-// // create.() returns a promise
+// // create() returns a promise
 
 Cohort.create(cohorts)
   .then(() => {

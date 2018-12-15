@@ -15,6 +15,29 @@ router.get('/cohorts', (req, res, next) => {
     .catch(next)
 });
 
+router.post('/cohorts/create', (req, res, next) => {
+  const {
+    language,
+    category
+  } = req.body;
+
+  const newCohort = Cohort({
+    language,
+    category,
+  });
+
+  Cohort.create(newCohort)
+  .then(() => {
+    console.log('New cohort was created');
+    mongoose.connection.close();
+  })
+  .catch(error => {
+    console.error(error);
+  });
+  
+  
+});
+
 
 
 
