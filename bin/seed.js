@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const Cohort = require('../models/cohorts');
+const Student = require('../models/students');
 const User = require('../models/user');
 
 // --
@@ -17,7 +18,6 @@ mongoose.connect('mongodb://localhost/ironganization', {
 const encryptPassword = (passString) => {
   const salt = bcrypt.genSaltSync(10);
   return bcrypt.hashSync(passString, salt);
-
 }
 
 const users = [
@@ -39,16 +39,33 @@ const cohorts = [
   }
 ]
 
+const students = [
+  {
+    name: "Selim",
+    surname: "Lebbady"
+  }
+]
+
+
 // // create() returns a promise
+Student.create(students)
+.then(() => {
+  console.log('Students was created');
+  mongoose.connection.close();
+})
+.catch(error => {
+  console.error(error);
+});
 
 Cohort.create(cohorts)
-  .then(() => {
-    console.log('Cohorts was created');
-    mongoose.connection.close();
-  })
-  .catch(error => {
-    console.error(error);
-  });
+.then(() => {
+  console.log('Cohorts was created');
+  mongoose.connection.close();
+})
+.catch(error => {
+  console.error(error);
+});
+
 
 User.create(users)
 .then(() => {
@@ -58,3 +75,4 @@ User.create(users)
 .catch(error => {
   console.error(error);
 });
+

@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 
 const Cohort = require('../models/cohorts');
+const Student = require('../models/students');
 
 
 router.get('/cohorts', (req, res, next) => {
@@ -23,7 +24,7 @@ router.post('/cohorts/create', (req, res, next) => {
 
   const newCohort = Cohort({
     language,
-    category,
+    category
   });
 
   Cohort.create(newCohort)
@@ -34,11 +35,52 @@ router.post('/cohorts/create', (req, res, next) => {
   .catch(error => {
     console.error(error);
   });
-  
-  
+
 });
 
+router.post('/students/create', (req, res, next) => {
+  console.log('llego-----------------------------');
+  const {
+    name,
+    surname,
+    pictureUrl,
+    prework: {
+      status,
+      level
+    },
+    project: {
+      difficulty,
+      quality,
+      deployLink,
+      presentationLink
+    }
+  } = req.body;
 
+  const newStudent = Student({
+    name,
+    surname,
+    pictureUrl,
+    prework: {
+      status,
+      level
+    },
+    project: {
+      difficulty,
+      quality,
+      deployLink,
+      presentationLink
+    }
+  });
+
+  Student.create(newStudent)
+  .then(() => {
+    console.log('New student was created');
+    mongoose.connection.close();
+  })
+  .catch(error => {
+    console.error(error);
+  });
+});
 
 
 module.exports = router;

@@ -126,6 +126,7 @@ students: [studentid,...]
 Student Model
 ```
 name - String // required
+surname - String //required
 pictureUrl - String
 prework - String (enum)
 project.level - String
