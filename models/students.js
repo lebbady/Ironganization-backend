@@ -32,7 +32,8 @@ const studentSchema = new Schema ({
   },
   projectDeployLink: {
     type: String,
-  }
+  },
+  cohort: []
 })
 
 const Student = mongoose.model('Student', studentSchema);

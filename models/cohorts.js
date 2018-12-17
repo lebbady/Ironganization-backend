@@ -27,8 +27,7 @@ const cohortSchema = new Schema ({
     type: String,
     enum: ["Full-time", "Part-time"],
     required: true
-  },
-  students: []
+  }
 })
 
 const Cohort = mongoose.model('Cohort', cohortSchema);
