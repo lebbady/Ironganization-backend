@@ -11,31 +11,27 @@ const studentSchema = new Schema ({
   pictureUrl: {
     type: String
   },
-  prework: {
-    status: {
-      type: String,
-      enum: ["Done", "Not done"]
-    },
-    level: {
-      type: String,
-      enum: ["Low", "Medium", "High"]
-    }
+  preworkStatus: {
+    type: String,
+    enum: ["Done", "Not done"]
   },
-  project: {
-    difficulty: {
-      type: String,
-      enum: ["Low", "Medium", "High"]
-    },
-    quality: {
-      type: String,
-      enum: ["Bad", "Medium", "Good"]
-    },
-    deployLink: {
-      type: String,
-    },
-    presentationLink: {
-      type: String
-    }
+  preworkLevel: {
+    type: String,
+    enum: ["Low", "Medium", "High"]
+  },
+  projectDifficulty: {
+    type: String,
+    enum: ["Low", "Medium", "High"]
+  },
+  projectQuality: {
+    type: String,
+    enum: ["Bad", "Medium", "Good"]
+  },
+  projectPresentationLink: {
+    type: String,
+  },
+  projectDeployLink: {
+    type: String,
   }
 })
 

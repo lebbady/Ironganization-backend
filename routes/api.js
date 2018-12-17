@@ -39,37 +39,28 @@ router.post('/cohorts/create', (req, res, next) => {
 });
 
 router.post('/students/create', (req, res, next) => {
-  console.log('llego-----------------------------');
   const {
     name,
     surname,
     pictureUrl,
-    prework: {
-      status,
-      level
-    },
-    project: {
-      difficulty,
-      quality,
-      deployLink,
-      presentationLink
-    }
+    preworkStatus,
+    preworkLevel,
+    projectDifficulty,
+    projectQuality,
+    projectDeployLink,
+    projectPresentationLink
   } = req.body;
 
   const newStudent = Student({
     name,
     surname,
     pictureUrl,
-    prework: {
-      status,
-      level
-    },
-    project: {
-      difficulty,
-      quality,
-      deployLink,
-      presentationLink
-    }
+    preworkStatus,
+    preworkLevel,
+    projectDifficulty,
+    projectQuality,
+    projectDeployLink,
+    projectPresentationLink
   });
 
   Student.create(newStudent)
