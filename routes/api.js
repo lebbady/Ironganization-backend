@@ -39,8 +39,7 @@ router.post('/cohorts/create', (req, res, next) => {
 
   Cohort.create(newCohort)
   .then(() => {
-    console.log('New cohort was created');
-    mongoose.connection.close();
+    res.json({message: 'cohort created'}).status(200);
   })
   .catch(error => {
     console.error(error);
@@ -58,9 +57,9 @@ router.post('/students/create', (req, res, next) => {
     projectDifficulty,
     projectQuality,
     projectDeployLink,
-    projectPresentationLink
+    projectPresentationLink,
+    cohortId
   } = req.body;
-
   const newStudent = Student({
     name,
     surname,
@@ -70,13 +69,14 @@ router.post('/students/create', (req, res, next) => {
     projectDifficulty,
     projectQuality,
     projectDeployLink,
-    projectPresentationLink
+    projectPresentationLink,
+    cohortId
   });
 
   Student.create(newStudent)
-  .then(() => {
+  .then((student) => {
     console.log('New student was created');
-    mongoose.connection.close();
+    res.json(student).status(200);
   })
   .catch(error => {
     console.error(error);
@@ -84,14 +84,19 @@ router.post('/students/create', (req, res, next) => {
 });
 
 router.get('/cohorts/:cohortId', (req, res, next) => {
-  console.log('he llegado');
   const cohortId = req.params.cohortId;
   Cohort.findById(cohortId)
   .then((cohort) => {
-    res.json(cohort);
+    Student.find({"cohortId": cohort._id})
+    .then((results) => {
+      res.json(results);
+    })
   })
   .catch((next));
+  
 })
+
+
 
 
 module.exports = router;
