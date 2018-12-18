@@ -29,12 +29,16 @@ router.get('/students/create', (req, res, next) => {
 router.post('/cohorts/create', (req, res, next) => {
   const {
     language,
-    category
+    category,
+    startingDate,
+    endingDate
   } = req.body;
 
   const newCohort = Cohort({
     language,
-    category
+    category,
+    startingDate,
+    endingDate
   });
 
   Cohort.create(newCohort)
@@ -78,9 +82,7 @@ router.post('/students/create', (req, res, next) => {
     console.log('New student was created');
     res.json(student).status(200);
   })
-  .catch(error => {
-    console.error(error);
-  });
+  .catch(next);
 });
 
 router.get('/cohorts/:cohortId', (req, res, next) => {
@@ -96,7 +98,42 @@ router.get('/cohorts/:cohortId', (req, res, next) => {
   
 })
 
+router.get('/students/:studentId', (req, res, next) => {
+  const studentId = req.params.studentId;
+  Student.findById(studentId)
+  .then((student) => {
+    res.json(student);
+    })
+  .catch((next));
+  
+})
+
+router.delete('/students/:studentId', (req, res, next) => {
+  const studentId = req.params.studentId;
+  Student.findByIdAndDelete(studentId)
+  .then((student) => {
+    res.status(200);
+    res.json({
+      message: "deleted",
+      student
+    });
+  })
+  .catch((next));
+})
 
 
+router.delete('/cohorts/:cohortId', (req, res, next) => {
+  console.log('llego------------------------------')
+  const cohortId = req.params.cohortId;
+  Cohort.findByIdAndDelete(cohortId)
+  .then((cohort) => {
+    res.status(200);
+    res.json({
+      message: "deleted",
+      cohort
+    });
+  })
+  .catch((next));
+})
 
 module.exports = router;
