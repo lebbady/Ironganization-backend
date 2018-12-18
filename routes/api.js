@@ -16,6 +16,16 @@ router.get('/cohorts', (req, res, next) => {
     .catch(next)
 });
 
+router.get('/students/create', (req, res, next) => {
+  
+  Cohort.find({})
+    .then((cohortList) => {
+      res.status(200);
+      res.json(cohortList);
+    })
+    .catch(next)
+});
+
 router.post('/cohorts/create', (req, res, next) => {
   const {
     language,
@@ -72,6 +82,16 @@ router.post('/students/create', (req, res, next) => {
     console.error(error);
   });
 });
+
+router.get('/cohorts/:cohortId', (req, res, next) => {
+  console.log('he llegado');
+  const cohortId = req.params.cohortId;
+  Cohort.findById(cohortId)
+  .then((cohort) => {
+    res.json(cohort);
+  })
+  .catch((next));
+})
 
 
 module.exports = router;

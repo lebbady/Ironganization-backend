@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
 
 const studentSchema = new Schema ({
   name: {
@@ -33,7 +34,10 @@ const studentSchema = new Schema ({
   projectDeployLink: {
     type: String,
   },
-  cohort: []
+  cohortId: {
+    type: ObjectId,
+    ref: 'Cohort'
+  }
 })
 
 const Student = mongoose.model('Student', studentSchema);
