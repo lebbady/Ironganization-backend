@@ -137,8 +137,7 @@ router.delete('/cohorts/:cohortId', (req, res, next) => {
 })
 
 
-router.put('/cohorts/edit/:cohortId', (req, res, next) => {
-  console.log('llego -------------')
+router.put('/cohorts/:cohortId/edit', (req, res, next) => {
   const cohortId = req.params.cohortId;
   const {
     language,
@@ -162,4 +161,43 @@ router.put('/cohorts/edit/:cohortId', (req, res, next) => {
     console.error(error);
   });
 });
+
+router.put('/students/:studentId/edit', (req, res, next) => {
+  console.log('llego -------------')
+  const studentId = req.params.studentId;
+  const {
+    name,
+    surname,
+    pictureUrl,
+    preworkStatus,
+    preworkLevel,
+    projectDifficulty,
+    projectQuality,
+    projectDeployLink,
+    projectPresentationLink,
+    cohortId
+  } = req.body;
+  const updateStudent = {
+    name,
+    surname,
+    pictureUrl,
+    preworkStatus,
+    preworkLevel,
+    projectDifficulty,
+    projectQuality,
+    projectDeployLink,
+    projectPresentationLink,
+    cohortId
+  }
+
+  Student.findByIdAndUpdate(studentId, {$set: updateStudent}, {new: true})
+  .then((results) => {
+    res.json({message: 'student edited'}).status(200);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+});
+
+
 module.exports = router;
