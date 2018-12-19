@@ -136,4 +136,30 @@ router.delete('/cohorts/:cohortId', (req, res, next) => {
   .catch((next));
 })
 
+
+router.put('/cohorts/edit/:cohortId', (req, res, next) => {
+  console.log('llego -------------')
+  const cohortId = req.params.cohortId;
+  const {
+    language,
+    category,
+    startingDate,
+    endingDate
+  } = req.body;
+
+  const updateCohort = {
+    language,
+    category,
+    startingDate,
+    endingDate
+  }
+
+  Cohort.findByIdAndUpdate(cohortId, {$set: updateCohort}, {new: true})
+  .then((results) => {
+    res.json({message: 'cohort edited'}).status(200);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+});
 module.exports = router;
