@@ -123,7 +123,6 @@ router.delete('/students/:studentId', (req, res, next) => {
 
 
 router.delete('/cohorts/:cohortId', (req, res, next) => {
-  console.log('llego------------------------------')
   const cohortId = req.params.cohortId;
   Cohort.findByIdAndDelete(cohortId)
   .then((cohort) => {
@@ -163,7 +162,6 @@ router.put('/cohorts/:cohortId/edit', (req, res, next) => {
 });
 
 router.put('/students/:studentId/edit', (req, res, next) => {
-  console.log('llego -------------')
   const studentId = req.params.studentId;
   const {
     name,

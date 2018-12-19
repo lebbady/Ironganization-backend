@@ -52,46 +52,6 @@ router.post('/login', (req, res, next) => {
     .catch(next);
 });
 
-/*
-router.post('/signup', (req, res, next) => {
-  const {
-    username,
-    password
-  } = req.body;
-
-  if (!username || !password) {
-    return res.status(422).json({
-      error: 'empty'
-    });
-  }
-
-  User.findOne({
-      username
-    }, 'username')
-    .then((userExists) => {
-      if (userExists) {
-        return res.status(422).json({
-          error: 'username-not-unique'
-        });
-      }
-
-      const salt = bcrypt.genSaltSync(10);
-      const hashPass = bcrypt.hashSync(password, salt);
-
-      const newUser = User({
-        username,
-        password: hashPass,
-      });
-
-      return newUser.save().then(() => {
-        req.session.currentUser = newUser;
-        res.json(newUser);
-      });
-    })
-    .catch(next);
-});
-*/
-
 router.post('/logout', (req, res) => {
   req.session.currentUser = null;
   return res.status(204).send();
