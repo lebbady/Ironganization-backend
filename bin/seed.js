@@ -6,10 +6,11 @@ const bcrypt = require('bcrypt');
 const Cohort = require('../models/cohorts');
 const Student = require('../models/students');
 const User = require('../models/user');
+require('dotenv').config();
 
 // --
 
-mongoose.connect('mongodb://localhost/ironganization', {
+mongoose.connect(process.env.MONGODB_URI, {
   keepAlive: true,
   useNewUrlParser: true,
   reconnectTries: Number.MAX_VALUE
