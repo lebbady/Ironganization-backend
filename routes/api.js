@@ -2,11 +2,23 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
+const { isLoggedIn } = require('../helpers/middlewares');
+
 const Cohort = require('../models/cohorts');
 const Student = require('../models/students');
 
 
-router.get('/cohorts', (req, res, next) => {
+router.get('/cohorts', isLoggedIn(), (req, res, next) => {
+
+  Cohort.find({})
+    .then((cohortList) => {
+      res.status(200);
+      res.json(cohortList);
+    })
+    .catch(next)
+});
+
+router.get('/students/create', isLoggedIn(),   (req, res, next) => {
   
   Cohort.find({})
     .then((cohortList) => {
@@ -16,17 +28,7 @@ router.get('/cohorts', (req, res, next) => {
     .catch(next)
 });
 
-router.get('/students/create', (req, res, next) => {
-  
-  Cohort.find({})
-    .then((cohortList) => {
-      res.status(200);
-      res.json(cohortList);
-    })
-    .catch(next)
-});
-
-router.post('/cohorts/create', (req, res, next) => {
+router.post('/cohorts/create', isLoggedIn(), (req, res, next) => {
   const {
     language,
     category,
@@ -51,7 +53,7 @@ router.post('/cohorts/create', (req, res, next) => {
 
 });
 
-router.post('/students/create', (req, res, next) => {
+router.post('/students/create', isLoggedIn(), (req, res, next) => {
   const {
     name,
     surname,
@@ -85,7 +87,7 @@ router.post('/students/create', (req, res, next) => {
   .catch(next);
 });
 
-router.get('/cohorts/:cohortId', (req, res, next) => {
+router.get('/cohorts/:cohortId',isLoggedIn(),  (req, res, next) => {
   const cohortId = req.params.cohortId;
   Cohort.findById(cohortId)
   .then((cohort) => {
@@ -98,7 +100,7 @@ router.get('/cohorts/:cohortId', (req, res, next) => {
   
 })
 
-router.get('/students/:studentId', (req, res, next) => {
+router.get('/students/:studentId', isLoggedIn(), (req, res, next) => {
   const studentId = req.params.studentId;
   Student.findById(studentId)
   .then((student) => {
@@ -108,7 +110,7 @@ router.get('/students/:studentId', (req, res, next) => {
   
 })
 
-router.delete('/students/:studentId', (req, res, next) => {
+router.delete('/students/:studentId',isLoggedIn(),  (req, res, next) => {
   const studentId = req.params.studentId;
   Student.findByIdAndDelete(studentId)
   .then((student) => {
@@ -122,7 +124,7 @@ router.delete('/students/:studentId', (req, res, next) => {
 })
 
 
-router.delete('/cohorts/:cohortId', (req, res, next) => {
+router.delete('/cohorts/:cohortId',isLoggedIn(),  (req, res, next) => {
   const cohortId = req.params.cohortId;
   Cohort.findByIdAndDelete(cohortId)
   .then((cohort) => {
@@ -136,7 +138,7 @@ router.delete('/cohorts/:cohortId', (req, res, next) => {
 })
 
 
-router.put('/cohorts/:cohortId/edit', (req, res, next) => {
+router.put('/cohorts/:cohortId/edit',isLoggedIn(),  (req, res, next) => {
   const cohortId = req.params.cohortId;
   const {
     language,
@@ -161,7 +163,7 @@ router.put('/cohorts/:cohortId/edit', (req, res, next) => {
   });
 });
 
-router.put('/students/:studentId/edit', (req, res, next) => {
+router.put('/students/:studentId/edit',isLoggedIn(),  (req, res, next) => {
   const studentId = req.params.studentId;
   const {
     name,
